@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(node --version; foreach \\($f in @\\('js/config.js','js/audio.js','js/input.js','js/game.js','js/render.js','js/main.js'\\)\\) { node --check $f; if \\($?\\) { \"OK  $f\" } })",
+      "PowerShell(node \"C:\\\\Users\\\\ynizo\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\D--laragon-www-snake\\\\33695680-debd-4893-ac98-fdf2791651cd\\\\scratchpad\\\\smoke.js\")"
+    ]
+  }
+}

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SnA.I.k'Em All — 2 à 4 joueurs</title>
+  <link rel="stylesheet" href="css/style.css?v=7" />
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <h1 class="brand">Sn<span>A.I.</span>k'Em All</h1>
+      <div class="center-info">
+        <div id="round-label">PRÊT ?</div>
+        <div id="round-timer">--:--</div>
+      </div>
+      <div class="meta"><span id="mute-state">son actif (M)</span></div>
+    </header>
+
+    <div class="stage">
+      <canvas id="board"></canvas>
+      <div id="overlay" class="overlay"></div>
+
+      <section id="padconfig" class="padconfig" hidden>
+        <div class="pc-head">
+          <h2>Configuration des manettes</h2>
+          <div class="pc-head-actions">
+            <button type="button" id="pc-reset">Valeurs Xbox (A / X / B)</button>
+            <button type="button" id="pc-close">Fermer</button>
+          </div>
+        </div>
+
+        <div class="pc-grid">
+          <div class="pc-player" id="pc-0">
+            <h3 class="pc-title">JOUEUR 1</h3>
+            <p class="pc-pad" data-padname>Aucune manette détectée</p>
+            <div class="pc-rows">
+              <button type="button" class="pc-row" data-action="boost"><span>Boost</span><b data-btn>A</b></button>
+              <button type="button" class="pc-row" data-action="shoot"><span>Tir</span><b data-btn>X</b></button>
+              <button type="button" class="pc-row" data-action="shield"><span>Bouclier</span><b data-btn>B</b></button>
+            </div>
+            <p class="pc-live">Bouton pressé : <b data-live>—</b></p>
+          </div>
+
+          <div class="pc-player" id="pc-1">
+            <h3 class="pc-title">JOUEUR 2</h3>
+            <p class="pc-pad" data-padname>Aucune manette détectée</p>
+            <div class="pc-rows">
+              <button type="button" class="pc-row" data-action="boost"><span>Boost</span><b data-btn>A</b></button>
+              <button type="button" class="pc-row" data-action="shoot"><span>Tir</span><b data-btn>X</b></button>
+              <button type="button" class="pc-row" data-action="shield"><span>Bouclier</span><b data-btn>B</b></button>
+            </div>
+            <p class="pc-live">Bouton pressé : <b data-live>—</b></p>
+          </div>
+
+          <div class="pc-player" id="pc-2">
+            <h3 class="pc-title">JOUEUR 3</h3>
+            <p class="pc-pad" data-padname>Aucune manette détectée</p>
+            <div class="pc-rows">
+              <button type="button" class="pc-row" data-action="boost"><span>Boost</span><b data-btn>A</b></button>
+              <button type="button" class="pc-row" data-action="shoot"><span>Tir</span><b data-btn>X</b></button>
+              <button type="button" class="pc-row" data-action="shield"><span>Bouclier</span><b data-btn>B</b></button>
+            </div>
+            <p class="pc-live">Bouton pressé : <b data-live>—</b></p>
+          </div>
+
+          <div class="pc-player" id="pc-3">
+            <h3 class="pc-title">JOUEUR 4</h3>
+            <p class="pc-pad" data-padname>Aucune manette détectée</p>
+            <div class="pc-rows">
+              <button type="button" class="pc-row" data-action="boost"><span>Boost</span><b data-btn>A</b></button>
+              <button type="button" class="pc-row" data-action="shoot"><span>Tir</span><b data-btn>X</b></button>
+              <button type="button" class="pc-row" data-action="shield"><span>Bouclier</span><b data-btn>B</b></button>
+            </div>
+            <p class="pc-live">Bouton pressé : <b data-live>—</b></p>
+          </div>
+        </div>
+
+        <p class="pc-hint">
+          Cliquez sur une ligne puis appuyez sur le bouton voulu de la manette concernée.
+          La ligne « Bouton pressé » affiche en direct ce que la manette envoie : utilisez-la
+          pour vérifier que A, X et B sont bien reconnus. La direction reste sur le stick
+          gauche et la croix. Réglages conservés d'une partie à l'autre.
+        </p>
+      </section>
+    </div>
+
+    <section class="hud">
+      <article class="panel" id="panel-0">
+        <div class="panel-head">
+          <span class="dot"></span>
+          <h2 class="pname">JOUEUR 1</h2>
+          <span class="pad" data-pad>Clavier</span>
+        </div>
+        <div class="scoreline">
+          <span class="score" data-score>0</span>
+          <span class="len">longueur <b data-len>6</b></span>
+          <span class="len" title="Longueur cumulée chaque seconde : départage les survivants à la fin du temps">cumul <b data-tail>0</b></span>
+        </div>
+        <div class="gauges">
+          <div class="gauge boost"><label>BOOST</label><div class="bar"><i data-boost></i></div></div>
+          <div class="gauge gun"><label>TIR</label><div class="bar"><i data-gun></i></div></div>
+          <div class="gauge shield"><label>BOUCLIER</label><div class="bar"><i data-shield></i></div></div>
+        </div>
+      </article>
+
+      <article class="panel" id="panel-1">
+        <div class="panel-head">
+          <span class="dot"></span>
+          <h2 class="pname">JOUEUR 2</h2>
+          <span class="pad" data-pad>Clavier</span>
+        </div>
+        <div class="scoreline">
+          <span class="score" data-score>0</span>
+          <span class="len">longueur <b data-len>6</b></span>
+          <span class="len" title="Longueur cumulée chaque seconde : départage les survivants à la fin du temps">cumul <b data-tail>0</b></span>
+        </div>
+        <div class="gauges">
+          <div class="gauge boost"><label>BOOST</label><div class="bar"><i data-boost></i></div></div>
+          <div class="gauge gun"><label>TIR</label><div class="bar"><i data-gun></i></div></div>
+          <div class="gauge shield"><label>BOUCLIER</label><div class="bar"><i data-shield></i></div></div>
+        </div>
+      </article>
+
+      <article class="panel" id="panel-2">
+        <div class="panel-head">
+          <span class="dot"></span>
+          <h2 class="pname">JOUEUR 3</h2>
+          <span class="pad" data-pad>Clavier</span>
+        </div>
+        <div class="scoreline">
+          <span class="score" data-score>0</span>
+          <span class="len">longueur <b data-len>6</b></span>
+          <span class="len" title="Longueur cumulée chaque seconde : départage les survivants à la fin du temps">cumul <b data-tail>0</b></span>
+        </div>
+        <div class="gauges">
+          <div class="gauge boost"><label>BOOST</label><div class="bar"><i data-boost></i></div></div>
+          <div class="gauge gun"><label>TIR</label><div class="bar"><i data-gun></i></div></div>
+          <div class="gauge shield"><label>BOUCLIER</label><div class="bar"><i data-shield></i></div></div>
+        </div>
+      </article>
+
+      <article class="panel" id="panel-3">
+        <div class="panel-head">
+          <span class="dot"></span>
+          <h2 class="pname">JOUEUR 4</h2>
+          <span class="pad" data-pad>Clavier</span>
+        </div>
+        <div class="scoreline">
+          <span class="score" data-score>0</span>
+          <span class="len">longueur <b data-len>6</b></span>
+          <span class="len" title="Longueur cumulée chaque seconde : départage les survivants à la fin du temps">cumul <b data-tail>0</b></span>
+        </div>
+        <div class="gauges">
+          <div class="gauge boost"><label>BOOST</label><div class="bar"><i data-boost></i></div></div>
+          <div class="gauge gun"><label>TIR</label><div class="bar"><i data-gun></i></div></div>
+          <div class="gauge shield"><label>BOUCLIER</label><div class="bar"><i data-shield></i></div></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="js/config.js?v=7"></script>
+  <script src="js/audio.js?v=7"></script>
+  <script src="js/input.js?v=7"></script>
+  <script src="js/game.js?v=7"></script>
+  <script src="js/bot.js?v=7"></script>
+  <script src="js/render.js?v=7"></script>
+  <script src="js/main.js?v=7"></script>
+</body>
+</html>
